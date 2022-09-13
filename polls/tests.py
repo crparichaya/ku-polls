@@ -1,8 +1,6 @@
 import datetime
-
 from django.test import TestCase
 from django.utils import timezone
-
 from .models import Question
 from django.urls import reverse
 
@@ -35,6 +33,32 @@ class QuestionModelTests(TestCase):
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
+
+    # for can vote
+    def test_can_vote_pub_date_in_the_future(self):
+        """Cannot vot when pub_date is in the future, so can vote have to return false"""
+        future_question = create_question(question_text="In the future", days=30)
+        self.assertFalse(future_question.can_vote())
+
+    def test_current_date_time_is_exactly_pub_date(self):
+        """Voting is allowed if it is still on published date."""
+        voting_question = create_question(question_text="Can Vote", days=2)
+        self.assertFalse(voting_question.can_vote())
+
+    def test_cannot_vote_after_end_date(self):
+        """Voting is not allowed if it is after end date."""
+        end_question = create_question(question_text="Cannot Vote", days=-5)
+        self.assertTrue(end_question.can_vote())
+
+    def test_poll_with_no_end_date(self):
+        """it is still can vote"""
+        voting_question = create_question(question_text="Can Vote", days=0)
+        self.assertTrue(voting_question.can_vote())
+
+    def test_cannot_vote_if_the_poll_is_not_publish(self):
+        """Cannot vote if the poll still unpublished"""
+        no_question = create_question(question_text="", days=2)
+        self.assertFalse(no_question.can_vote())
 
 
 def create_question(question_text, days):
