@@ -1,3 +1,6 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
 <form action="{% url 'polls:vote' question.id %}" method="post">
 {% csrf_token %}
 <fieldset>
@@ -7,6 +10,7 @@
         <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
+
 </fieldset>
 <input type="submit" value="Vote">
     <a href="{% url 'polls:index'%}"><input type="button" value="Back to List of Polls"></a>
