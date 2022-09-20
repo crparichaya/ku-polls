@@ -3,7 +3,11 @@
 <link rel="stylesheet" href="{% static 'polls/style.css' %}">
 
 {% if latest_question_list %}
+
     <ul>
+
+        <h1>Welcome to KU-Polls</h1>
+        <h3>Here is the question</h3>
     {% for question in latest_question_list %}
         <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
         <a href="{% url 'polls:results' question.id %}"> See a result</a> </li>
@@ -12,3 +16,13 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+
+<br>
+<h4>Login before vote</h4>
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}">Log Out</a>
+{% else %}
+<a href="{% url 'login' %}">Log in</a>
+{% endif %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+
