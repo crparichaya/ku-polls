@@ -69,3 +69,4 @@ def vote(request, question_id):
         else:
             selected_choice.vote_set.create(user=request.user, question=question)
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
