@@ -38,11 +38,20 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
 
     def get(self, request, pk):
         self.question = get_object_or_404(Question, pk=pk)
-        voting = self.question.can_vote()
-        if not voting:
-            messages.error(request, "Cannot Vote in this time")
-            HttpResponseRedirect(reverse('polls:index'))
-        return super().get(request, pk=pk)
+        try:
+            vote = Vote.objects.get(user=request.user,
+                                    choice__in=self.question.choice_set.all())
+
+            previous_one = vote.choice.choice_text
+        except (Vote.DoesNotExist, TypeError):
+            previous_one = ""
+
+        if self.question.can_vote():
+            return render(request, self.template_name, {"question": self.question,
+                                                        "previous_vote": previous_one})
+        else:
+            messages.error(request, f"Poll number {self.question.id} is not available to vote")
+            return redirect("polls:index")
 
 
 class ResultsView(generic.DetailView):
