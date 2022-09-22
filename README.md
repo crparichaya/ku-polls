@@ -22,5 +22,15 @@ All project documents are in the [Project Wiki](https://github.com/crparichaya/k
 - [Requirements](https://github.com/crparichaya/ku-polls/wiki/Requirements)
 - [Software Development Plan](https://github.com/crparichaya/ku-polls/wiki/Software-Development-Plan)
 - [Iteration 1 Plan](https://github.com/crparichaya/ku-polls/wiki/Iteration-1-Plan)
-
+- [Iteration 2 Plan](https://github.com/crparichaya/ku-polls/wiki/Iteration-2-Plan)
+- [Iteration 3 Plan](https://github.com/crparichaya/ku-polls/wiki/Iteration-3-Plan)
 [django-tutorial](https://docs.djangoproject.com/en/4.1/intro/tutorial01/)
+
+# Demo users
+
+| Username   | Password | 
+|------------|----------| 
+| AAA | aaa |
+| BBB | bbb |
+
+
