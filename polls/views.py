@@ -1,10 +1,14 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -20,7 +24,9 @@ class IndexView(generic.ListView):
         ).order_by('-pub_date')[:5]
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
+    """Class based view for viewing a poll."""
+
     model = Question
     template_name = 'polls/detail.html'
 
@@ -32,11 +38,20 @@ class DetailView(generic.DetailView):
 
     def get(self, request, pk):
         self.question = get_object_or_404(Question, pk=pk)
-        voting = self.question.can_vote()
-        if not voting:
-            messages.error(request, "Cannot Vote in this time")
-            HttpResponseRedirect(reverse('polls:index'))
-        return super().get(request, pk=pk)
+        try:
+            vote = Vote.objects.get(user=request.user,
+                                    choice__in=self.question.choice_set.all())
+
+            previous_one = vote.choice.choice_text
+        except (Vote.DoesNotExist, TypeError):
+            previous_one = ""
+
+        if self.question.can_vote():
+            return render(request, self.template_name, {"question": self.question,
+                                                        "previous_vote": previous_one})
+        else:
+            messages.error(request, f"Poll number {self.question.id} is not available to vote")
+            return redirect("polls:index")
 
 
 class ResultsView(generic.DetailView):
@@ -44,20 +59,23 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required()
 def vote(request, question_id):
+    """Vote page for the selected question."""
     question = get_object_or_404(Question, pk=question_id)
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
-        # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
             'question': question,
-            'error_message': "You didn't select a choice.",
+            'error_message': "You did not select a choice.",
         })
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        # Always return an HttpResponseRedirect after successfully dealing
-        # with POST data. This prevents data from being posted twice if a
-        # user hits the Back button.
+        if question.vote_set.filter(user=request.user).exists():
+            the_vote = question.vote_set.get(user=request.user)
+            the_vote.choice = selected_choice
+            the_vote.save()
+        else:
+            selected_choice.vote_set.create(user=request.user, question=question)
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
