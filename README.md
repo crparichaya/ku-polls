@@ -42,6 +42,11 @@ You have to check the requirement that are required by:
 ```
 pip install -r requirements.txt
 ```
+> such as pip install django, pip install python-decouple
+#### Create .env file
+
+You can look example in
+[Sample.env](https://github.com/crparichaya/ku-polls/blob/master/mysite/sample.env) 
 
 Create a new database by running migrations
 ```
