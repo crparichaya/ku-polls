@@ -2,7 +2,6 @@ import datetime
 
 from django.db import models
 from django.utils import timezone
-from django.contrib import admin
 from django.contrib.auth.models import User
 
 
@@ -45,6 +44,8 @@ class Choice(models.Model):
 
 class Vote(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, default=0)
-    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, default=0)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE,
+                               blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
+                             null=True, default=0)
 

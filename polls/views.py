@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
@@ -47,8 +47,9 @@ class DetailView(LoginRequiredMixin, generic.DetailView):
             previous_one = ""
 
         if self.question.can_vote():
-            return render(request, self.template_name, {"question": self.question,
-                                                        "previous_vote": previous_one})
+            return render(request, self.template_name,
+                          {"question": self.question,
+                           "previous_vote": previous_one})
         else:
             messages.error(request, f"Poll number {self.question.id} is not available to vote")
             return redirect("polls:index")
@@ -76,6 +77,7 @@ def vote(request, question_id):
             the_vote.choice = selected_choice
             the_vote.save()
         else:
-            selected_choice.vote_set.create(user=request.user, question=question)
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
-
+            selected_choice.vote_set.create(user=request.user,
+                                            question=question)
+        return HttpResponseRedirect(reverse('polls:results',
+                                            args=(question.id,)))

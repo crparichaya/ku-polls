@@ -30,14 +30,17 @@ class QuestionModelTests(TestCase):
         was_published_recently() returns True for questions whose pub_date
         is within the last day.
         """
-        time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
+        time = timezone.now() - datetime.timedelta(hours=23,
+                                                   minutes=59, seconds=59)
         recent_question = Question(pub_date=time)
         self.assertIs(recent_question.was_published_recently(), True)
 
     # for can vote
     def test_can_vote_pub_date_in_the_future(self):
-        """Cannot vot when pub_date is in the future, so can vote have to return false"""
-        future_question = create_question(question_text="In the future", days=30)
+        """Cannot vot when pub_date is in the future,
+         so can vote have to return false"""
+        future_question = create_question(question_text="In the future"
+                                          , days=30)
         self.assertFalse(future_question.can_vote())
 
     def test_current_date_time_is_exactly_pub_date(self):
@@ -132,8 +135,8 @@ class QuestionIndexViewTests(TestCase):
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
         """
-        The detail view of a question with a pub_date in the future
-        returns a 404 not found.
+        The detail view of a question with a pub_date in the
+        future returns a 404 not found.
         """
         future_question = create_question(question_text='Future question.', days=5)
         url = reverse('polls:detail', args=(future_question.id,))
@@ -142,8 +145,8 @@ class QuestionDetailViewTests(TestCase):
 
     def test_past_question(self):
         """
-        The detail view of a question with a pub_date in the past
-        displays the question's text.
+        The detail view of a question with a pub_date in
+        the past displays the question's text.
         """
         past_question = create_question(question_text='Past Question.', days=-5)
         url = reverse('polls:detail', args=(past_question.id,))
