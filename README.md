@@ -12,41 +12,66 @@ https://cpske.github.io/ISP) course at Kasetsart University.
 
 ## How to Install 
 Clone this repository into your local working space.
-> https://github.com/crparichaya/ku-polls.git
 
+``` 
+https://github.com/crparichaya/ku-polls.git
+```
 Then
-> python -m venv env
+```
+python -m venv env
+```
 
 After that 
 
 On Linux/MacOS
-> .  env/bin/activate
+```
+ .  env/bin/activate
+```
 
 or
->  source env/bin/activate
+```
+source env/bin/activate
+```
 
 On Microsoft Windows:
-
-> env\Scripts\activate
+```
+env\Scripts\activate
+```
 
 You have to check the requirement that are required by:
-> pip install -r requirements.txt
+```
+pip install -r requirements.txt
+```
 
 Create a new database by running migrations
-> python manage.py migrate
+```
+python manage.py migrate
+```
 
 Then import data
-> python manage.py loaddata data/polls.json data/users.json
+```
+python manage.py loaddata data/polls.json data/users.json
+```
 
 ## How to run
 Runserver by:
-> python manage.py runserver
+```
+python manage.py runserver
+```
+
+or
+``` 
+python3 manage.py runserver
+```
 
 Deactivate the environment by
-> deactivate
+```
+deactivate
+```
 
-> or close the terminal
-
+```
+or close the terminal
+```
 
 ## Project Documents
 
