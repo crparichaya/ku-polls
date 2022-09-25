@@ -1,0 +1,95 @@
+[
+{
+  "model": "polls.question",
+  "pk": 1,
+  "fields": {
+    "question_text": "What is the largest state in the USA?",
+    "pub_date": "2022-09-20T14:30:31Z",
+    "end_date": "2023-03-02T14:45:35Z"
+  }
+},
+{
+  "model": "polls.question",
+  "pk": 2,
+  "fields": {
+    "question_text": "How many states in The USA?",
+    "pub_date": "2022-09-20T14:46:07Z",
+    "end_date": "2023-04-06T14:46:17Z"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 1,
+  "fields": {
+    "question": 2,
+    "choice_text": "50"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 2,
+  "fields": {
+    "question": 2,
+    "choice_text": "51"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 3,
+  "fields": {
+    "question": 2,
+    "choice_text": "52"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 4,
+  "fields": {
+    "question": 1,
+    "choice_text": "Texas"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 5,
+  "fields": {
+    "question": 1,
+    "choice_text": "Alaska"
+  }
+},
+{
+  "model": "polls.choice",
+  "pk": 6,
+  "fields": {
+    "question": 1,
+    "choice_text": "California"
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 1,
+  "fields": {
+    "question": 2,
+    "choice": 3,
+    "user": 2
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 2,
+  "fields": {
+    "question": 1,
+    "choice": 6,
+    "user": 2
+  }
+},
+{
+  "model": "polls.vote",
+  "pk": 3,
+  "fields": {
+    "question": 2,
+    "choice": 2,
+    "user": 3
+  }
+}
+]
