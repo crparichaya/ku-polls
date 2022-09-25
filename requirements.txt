@@ -1,2 +1,5 @@
 Django>=4.1
 python-decouple
+sqlparse>=0.2.2
+asgiref<4,>=3.5.2
+tzdata-2022.2
