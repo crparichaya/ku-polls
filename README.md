@@ -1,3 +1,5 @@
+![example workflow](https://github.com/crparichaya/ku-polls/actions/workflows/python-app.yml/badge.svg)
+[![codecov](https://codecov.io/gh/crparichaya/ku-polls/branch/master/graph/badge.svg?token=0X4NVTDVLS)](https://codecov.io/gh/crparichaya/ku-polls)
 # ku-polls
 Web application for polls and surveys at Kasetsart University
 
