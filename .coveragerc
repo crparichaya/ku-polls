@@ -5,6 +5,6 @@ branch = True
 omit =
     */__init__.py
     mysite/*
-    tests/*.py
+    polls/tests/*.py
     polls/migrations/*.py
     manage.py
